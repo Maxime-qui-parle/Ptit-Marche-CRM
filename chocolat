@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Menu pastel - Chocolat</title>
+  <style>
+    :root{
+      --btn-width: 160px;
+      --btn-height: 320px;
+      --radius: 18px;
+      --gap: 24px;
+
+      --mauve: #C6B3FF;
+      --bleu:  #A8D0FF;
+      --jaune: #FFF1A8;
+      --vert:  #C8FAD3;
+      --orange:#FFD9B3;
+
+      --txt: #2b2b2b;
+    }
+
+    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+    body{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: linear-gradient(180deg, #FBFBFF 0%, #FFFDF8 100%);
+      color:var(--txt);
+    }
+
+    .menu{
+      display:flex;
+      gap:var(--gap);
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .btn{
+      width:var(--btn-width);
+      height:var(--btn-height);
+      border-radius:var(--radius);
+      border: none;
+      cursor: pointer;
+      font-weight:700;
+      font-size:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      transition: transform 200ms cubic-bezier(.2,.9,.2,1), box-shadow 200ms;
+      position:relative;
+      background-repeat:no-repeat;
+      box-shadow: 0 6px 18px rgba(30,26,50,0.06);
+      border: 1px solid rgba(255,255,255,0.45);
+      user-select:none;
+      color: var(--txt);
+      padding: 12px;
+    }
+
+    /* overlay radial pour effet lumineux */
+    .btn::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:inherit;
+      background: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.18) 30%, rgba(255,255,255,0) 60%);
+      pointer-events:none;
+      mix-blend-mode: overlay;
+    }
+
+    .mauve{ background-color: var(--mauve); }
+    .bleu { background-color: var(--bleu);  }
+    .jaune{ background-color: var(--jaune); }
+    .vert { background-color: var(--vert);  }
+    .orange{ background-color: var(--orange); }
+
+    .btn:hover,
+    .btn:focus{
+      transform: scale(1.06);
+      box-shadow: 0 14px 36px rgba(30,26,50,0.12);
+    }
+
+    .title{
+      z-index:2;
+      pointer-events:none;
+      line-height:1.05;
+      white-space:pre-wrap;
+    }
+
+    /* panneau info */
+    .info{
+      position:absolute;
+      z-index:3;
+      left:50%;
+      transform: translateX(-50%) translateY(8px);
+      bottom:14px;
+      min-width: calc(var(--btn-width) - 20px);
+      background: linear-gradient(to bottom, #FFD9B3, #FFE7CC); /* orange pastel dégradé */
+      box-shadow: 0 8px 20px rgba(30,26,50,0.08);
+      border-radius: 10px;
+      padding: 10px 12px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:var(--txt);
+      pointer-events:none;
+      opacity:0;
+      transition: opacity 220ms ease, transform 220ms ease;
+      font-size:15px;
+    }
+
+    .info .label{
+      font-weight:600;
+      margin-bottom:6px;
+    }
+    .info .price{
+      font-weight:700;
+      font-size:14px;
+    }
+
+    @keyframes pulseOpacity {
+      0%   { opacity: 0.7; transform: translateX(-50%) translateY(0); }
+      50%  { opacity: 1;   transform: translateX(-50%) translateY(-4px); }
+      100% { opacity: 0.75; transform: translateX(-50%) translateY(0); }
+    }
+
+    .btn:hover .info,
+    .btn:focus .info{
+      opacity:1;
+      transform: translateX(-50%) translateY(0);
+      animation: pulseOpacity 1.8s ease-in-out infinite;
+    }
+
+    @media (max-width:1100px){
+      .menu{ flex-direction:column; gap:16px; }
+      .info{ bottom:10px; min-width: 86%; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .info{ transition:none; animation:none; }
+      .btn:hover .info{ opacity:1; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="menu" aria-label="Menu principal">
+    <button class="btn mauve">
+      <span class="title">chocolat 1</span>
+      <div class="info">
+        <span class="label">chocolat 1</span>
+        <span class="price">5,00$</span>
+      </div>
+    </button>
+
+    <button class="btn bleu">
+      <span class="title">chocolat 2</span>
+      <div class="info">
+        <span class="label">chocolat 2</span>
+        <span class="price">5,00$</span>
+      </div>
+    </button>
+
+    <button class="btn jaune">
+      <span class="title">chocolat 3</span>
+      <div class="info">
+        <span class="label">chocolat 3</span>
+        <span class="price">5,00$</span>
+      </div>
+    </button>
+
+    <button class="btn vert">
+      <span class="title">chocolat 4</span>
+      <div class="info">
+        <span class="label">chocolat 4</span>
+        <span class="price">5,00$</span>
+      </div>
+    </button>
+
+    <button class="btn orange">
+      <span class="title">chocolat 5</span>
+      <div class="info">
+        <span class="label">chocolat 5</span>
+        <span class="price">5,00$</span>
+      </div>
+    </button>
+  </nav>
+</body>
+</html>
