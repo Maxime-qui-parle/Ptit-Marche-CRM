@@ -3,29 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Menu pastel - Chocolat</title>
+  <title>Menu pastel - Avec avoine, lait, noir</title>
   <style>
     :root{
       --btn-width: 160px;
       --btn-height: 320px;
-      --radius: 18px;
-      --gap: 24px;
+      --radius: 0px;
+      --gap: 0px;
 
-      --mauve: #C6B3FF;
-      --bleu:  #A8D0FF;
-      --jaune: #FFF1A8;
       --vert:  #C8FAD3;
-      --orange:#FFD9B3;
+      --rouge: #FFB3B3;
 
       --txt: #2b2b2b;
     }
 
-    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
     body{
       display:flex;
       align-items:center;
       justify-content:center;
-      background: linear-gradient(180deg, #FBFBFF 0%, #FFFDF8 100%);
+      background: linear-gradient(to bottom, #FFD9B3, #FFE7CC); /* fond orange pastel */
       color:var(--txt);
     }
 
@@ -34,14 +32,13 @@
       gap:var(--gap);
       align-items:center;
       justify-content:center;
-      padding:20px;
     }
 
     .btn{
       width:var(--btn-width);
       height:var(--btn-height);
+      border:none;
       border-radius:var(--radius);
-      border: none;
       cursor: pointer;
       font-weight:700;
       font-size:18px;
@@ -51,56 +48,34 @@
       text-align:center;
       transition: transform 200ms cubic-bezier(.2,.9,.2,1), box-shadow 200ms;
       position:relative;
-      background-repeat:no-repeat;
-      box-shadow: 0 6px 18px rgba(30,26,50,0.06);
-      border: 1px solid rgba(255,255,255,0.45);
       user-select:none;
       color: var(--txt);
-      padding: 12px;
+      padding: 8px;
+      overflow:hidden;
+      background-repeat:no-repeat;
     }
-
-    /* overlay radial pour effet lumineux */
-    .btn::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      border-radius:inherit;
-      background: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.18) 30%, rgba(255,255,255,0) 60%);
-      pointer-events:none;
-      mix-blend-mode: overlay;
-    }
-
-    .mauve{ background-color: var(--mauve); }
-    .bleu { background-color: var(--bleu);  }
-    .jaune{ background-color: var(--jaune); }
-    .vert { background-color: var(--vert);  }
-    .orange{ background-color: var(--orange); }
 
     .btn:hover,
     .btn:focus{
       transform: scale(1.06);
-      box-shadow: 0 14px 36px rgba(30,26,50,0.12);
+      transform: translateY(-10px) scale(1.06); /* monte de 10px + zoom */
+      box-shadow: 0 18px 44px rgba(30,26,50,0.14);
+      z-index:10;
     }
 
-    .title{
-      z-index:2;
-      pointer-events:none;
-      line-height:1.05;
-      white-space:pre-wrap;
-    }
+    .title{ z-index:2; pointer-events:none; line-height:1.05; white-space:pre-wrap; }
 
-    /* panneau info */
     .info{
       position:absolute;
-      z-index:3;
+      z-index:4;
       left:50%;
       transform: translateX(-50%) translateY(8px);
-      bottom:14px;
+      bottom:12px;
       min-width: calc(var(--btn-width) - 20px);
-      background: linear-gradient(to bottom, #FFD9B3, #FFE7CC); /* orange pastel dégradé */
-      box-shadow: 0 8px 20px rgba(30,26,50,0.08);
+      background: rgba(255,255,255,0.90);
+      box-shadow: 0 10px 26px rgba(30,26,50,0.10);
       border-radius: 10px;
-      padding: 10px 12px;
+      padding: 8px 10px;
       display:flex;
       flex-direction:column;
       align-items:center;
@@ -109,82 +84,89 @@
       color:var(--txt);
       pointer-events:none;
       opacity:0;
-      transition: opacity 220ms ease, transform 220ms ease;
-      font-size:15px;
-    }
-
-    .info .label{
-      font-weight:600;
-      margin-bottom:6px;
-    }
-    .info .price{
-      font-weight:700;
+      transition: opacity 200ms ease, transform 200ms ease;
       font-size:14px;
     }
 
-    @keyframes pulseOpacity {
-      0%   { opacity: 0.7; transform: translateX(-50%) translateY(0); }
-      50%  { opacity: 1;   transform: translateX(-50%) translateY(-4px); }
-      100% { opacity: 0.75; transform: translateX(-50%) translateY(0); }
-    }
-
+    .info .label{ font-weight:600; margin-bottom:6px; }
+    .info .price{ font-weight:700; font-size:14px; }
     .btn:hover .info,
     .btn:focus .info{
       opacity:1;
       transform: translateX(-50%) translateY(0);
-      animation: pulseOpacity 1.8s ease-in-out infinite;
+      animation: pulseOpacity 1.6s ease-in-out infinite;
     }
 
-    @media (max-width:1100px){
-      .menu{ flex-direction:column; gap:16px; }
-      .info{ bottom:10px; min-width: 86%; }
+    .vert { background-color: var(--vert);  }
+    .rouge{ background-color: var(--rouge); }
+
+    /* bouton image */
+    .image-btn{
+      padding:0;
+      background:transparent;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
 
-    @media (prefers-reduced-motion: reduce){
-      .info{ transition:none; animation:none; }
-      .btn:hover .info{ opacity:1; }
+    .image-btn img{
+      width:100%;
+      height:100%;
+      object-fit: contain;
+      pointer-events:none;
+      user-select:none;
+      border:none;
+    }
+
+    @media (max-width:900px){
+      .menu{ flex-direction:column; }
     }
   </style>
 </head>
 <body>
   <nav class="menu" aria-label="Menu principal">
-    <button class="btn mauve">
-      <span class="title">chocolat 1</span>
+    <!-- Bouton 1 : avoine -->
+    <button class="btn image-btn" aria-label="Avoine crémeux">
+      <img src="https://raw.githubusercontent.com/Maxime-qui-parle/Ptit-Marche-CRM/refs/heads/main/produit/photo%20produit/avoine%20cr%C3%A9meux.png" alt="Avoine crémeux">
       <div class="info">
-        <span class="label">chocolat 1</span>
-        <span class="price">5,00$</span>
+        <div class="label">avoine crémeux</div>
+        <div class="price">5,00$</div>
       </div>
     </button>
 
-    <button class="btn bleu">
-      <span class="title">chocolat 2</span>
+    <!-- Bouton 2 : lait -->
+    <button class="btn image-btn" aria-label="Lait">
+      <img src="https://github.com/Maxime-qui-parle/Ptit-Marche-CRM/blob/main/produit/photo%20produit/lait.png?raw=true" alt="Lait">
       <div class="info">
-        <span class="label">chocolat 2</span>
-        <span class="price">5,00$</span>
+        <div class="label">lait</div>
+        <div class="price">5,00$</div>
       </div>
     </button>
 
-    <button class="btn jaune">
-      <span class="title">chocolat 3</span>
+    <!-- Bouton 3 : noir -->
+    <button class="btn image-btn" aria-label="Noir">
+      <img src="https://github.com/Maxime-qui-parle/Ptit-Marche-CRM/blob/main/produit/photo%20produit/chocolat-noir.png?raw=true?raw=true" alt="Noir">
       <div class="info">
-        <span class="label">chocolat 3</span>
-        <span class="price">5,00$</span>
+        <div class="label">noir</div>
+        <div class="price">5,00$</div>
       </div>
     </button>
 
-    <button class="btn vert">
-      <span class="title">chocolat 4</span>
+    <!-- Bouton 4 : caramel salé -->
+    <button class="btn image-btn" aria-label="Noir">
+      <img src="https://raw.githubusercontent.com/Maxime-qui-parle/Ptit-Marche-CRM/refs/heads/main/produit/photo%20produit/caramel%20sal%C3%A9.png?raw=true?raw=true" alt="Noir">
       <div class="info">
-        <span class="label">chocolat 4</span>
-        <span class="price">5,00$</span>
+        <div class="label">caramel salé</div>
+        <div class="price">5,00$</div>
       </div>
     </button>
 
-    <button class="btn orange">
-      <span class="title">chocolat 5</span>
+    <!-- Bouton 5 : amande -->
+    <button class="btn image-btn" aria-label="Noir">
+      <img src="https://raw.githubusercontent.com/Maxime-qui-parle/Ptit-Marche-CRM/refs/heads/main/produit/photo%20produit/amande.png?raw=true?raw=true" alt="Noir">
       <div class="info">
-        <span class="label">chocolat 5</span>
-        <span class="price">5,00$</span>
+        <div class="label">amande</div>
+        <div class="price">5,00$</div>
       </div>
     </button>
   </nav>
